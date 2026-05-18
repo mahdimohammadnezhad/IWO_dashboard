@@ -1,0 +1,55 @@
+name: IMT-Desert PR Pages Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+    paths:
+      - "IMT-Desert/**"
+      - ".github/workflows/imt-desert-pr-pages.yml"
+
+concurrency: imt-desert-preview-${{ github.event.pull_request.number }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    # PR previews need write permissions, which are not available for fork PRs by default.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        if: github.event.action != 'closed'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: IMT-Desert/package-lock.json
+
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        working-directory: IMT-Desert
+        run: npm ci
+
+      - name: Build static site
+        if: github.event.action != 'closed'
+        working-directory: IMT-Desert
+        run: npx vite build --base=./
+
+      - name: Deploy PR preview to GitHub Pages
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./IMT-Desert/dist
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+          wait-for-pages-deployment: true

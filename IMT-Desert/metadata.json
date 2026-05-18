@@ -1,0 +1,6 @@
+{
+  "name": "IMT-Desert",
+  "description": "An Irrigation Management Tool for Crop Recommendation and Optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
