@@ -60,7 +60,24 @@ Your output should directly be the tips and recommendations using markdown forma
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
+    app.use(
+      express.static(distPath, {
+        setHeaders: (res, filePath) => {
+          const ext = path.extname(filePath).toLowerCase();
+          if (ext === ".js" || ext === ".mjs") {
+            res.setHeader("Content-Type", "text/javascript; charset=utf-8");
+          } else if (ext === ".wasm") {
+            res.setHeader("Content-Type", "application/wasm");
+          } else if (ext === ".css") {
+            res.setHeader("Content-Type", "text/css; charset=utf-8");
+          }
+        },
+      }),
+    );
+    // Missing build assets should return 404, not index.html.
+    app.get(/^\/assets\/.+/, (req, res) => {
+      res.status(404).end();
+    });
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
