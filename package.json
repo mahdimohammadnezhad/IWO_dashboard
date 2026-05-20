@@ -1,52 +1,43 @@
 {
-  "name": "web",
-  "version": "0.1.0",
+  "name": "react-example",
   "private": true,
-  "dependencies": {
-    "@chartiful/react-chart-builder": "^0.1.6",
-    "@chartiful/react-horizontal-bar-graph": "^0.1.6",
-    "@devexpress/dx-react-chart": "^2.7.6",
-    "@devexpress/dx-react-chart-material-ui": "^2.7.6",
-    "@devexpress/dx-react-core": "^2.7.6",
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@material-ui/core": "^4.12.3",
-    "@mui/material": "^5.2.8",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "chart.js": "^3.7.0",
-    "mdbreact": "^5.2.0",
-    "react": "^17.0.2",
-    "react-chartjs-2": "^4.0.1",
-    "react-circular-progressbar": "^2.0.4",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "react-select": "^5.2.1",
-    "web-vitals": "^2.1.2"
-  },
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "tsx server.ts",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs",
+    "preview": "vite preview",
+    "clean": "rm -rf dist server.js",
+    "lint": "tsc --noEmit"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "dotenv": "^17.2.3",
+    "downloadjs": "^1.4.7",
+    "express": "^4.21.2",
+    "highcharts": "^12.6.0",
+    "highcharts-react-official": "^3.2.3",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.8.1",
+    "vite": "^6.2.3"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/downloadjs": "^1.4.6",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
   }
 }
