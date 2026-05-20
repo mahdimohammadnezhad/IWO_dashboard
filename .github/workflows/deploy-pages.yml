@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Build static site for Pages
-        run: npx vite build --base=/${{ github.event.repository.name }}/
+        run: npm run build
 
       - name: Disable Jekyll
         run: touch dist/.nojekyll
